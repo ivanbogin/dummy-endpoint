@@ -10,8 +10,6 @@ func HttpHandler(w http.ResponseWriter, r *http.Request) {
 	status := http.StatusOK
 	uri := r.URL.Path
 
-	log.Println(uri)
-
 	switch uri {
 	case "/500":
 		status = http.StatusInternalServerError
