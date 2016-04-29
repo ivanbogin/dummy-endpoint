@@ -1,2 +1,2 @@
 #!/bin/bash
-(export PORT=8080; go run server.go)
+(export PORT=8080; go run main.go)
