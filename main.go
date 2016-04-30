@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +23,10 @@ func HttpHandler(w http.ResponseWriter, r *http.Request) {
 		time.Sleep(time.Minute)
 	}
 
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Content-type", "application/json; charset=utf-8")
 	w.WriteHeader(status)
+	fmt.Fprintf(w, "{\"time\": \"%d\"}", time.Now().UnixNano())
 }
 
 func main() {
