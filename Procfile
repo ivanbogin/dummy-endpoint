@@ -1,1 +1,1 @@
-web: api-tester
+web: dummy-endpoint

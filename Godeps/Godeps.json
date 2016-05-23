@@ -1,5 +1,5 @@
 {
-	"ImportPath": "api-tester",
+	"ImportPath": "dummy-endpoint",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Deps": []
