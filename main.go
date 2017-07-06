@@ -1,41 +1,31 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
-	"os"
+	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
-func httpHandler(w http.ResponseWriter, r *http.Request) {
-	status := http.StatusOK
-	uri := r.URL.Path
-
-	switch uri {
-	case "/500":
-		status = http.StatusInternalServerError
-	case "/wait3":
-		time.Sleep(3 * time.Second)
-	case "/wait5":
-		time.Sleep(5 * time.Second)
-	case "/wait60":
-		time.Sleep(time.Minute)
-	}
-
-	w.Header().Set("Cache-Control", "no-cache")
-	w.Header().Set("Content-type", "application/json; charset=utf-8")
-	w.WriteHeader(status)
-	fmt.Fprintf(w, "{\"time\": \"%d\"}", time.Now().UnixNano())
-}
-
 func main() {
-	port := os.Getenv("PORT")
+	r := gin.Default()
+	r.GET("/status/:status", func(c *gin.Context) {
+		status, _ := strconv.Atoi(c.Param("status"))
+		c.JSON(status, gin.H{
+			"time": time.Now().UnixNano(),
+		})
+	})
+	r.GET("/wait/:seconds", func(c *gin.Context) {
+		seconds, _ := strconv.Atoi(c.Param("seconds"))
+		if seconds > 60 {
+			seconds = 60
+		}
 
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-
-	http.HandleFunc("/", httpHandler)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+		time.Sleep(time.Duration(seconds) * time.Second)
+		c.JSON(http.StatusOK, gin.H{
+			"time": time.Now().UnixNano(),
+		})
+	})
+	r.Run()
 }
