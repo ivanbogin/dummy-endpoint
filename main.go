@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func HttpHandler(w http.ResponseWriter, r *http.Request) {
+func httpHandler(w http.ResponseWriter, r *http.Request) {
 	status := http.StatusOK
 	uri := r.URL.Path
 
@@ -36,6 +36,6 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	http.HandleFunc("/", HttpHandler)
+	http.HandleFunc("/", httpHandler)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
