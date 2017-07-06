@@ -1,6 +1,6 @@
 {
 	"ImportPath": "dummy-endpoint",
-	"GoVersion": "go1.6",
-	"GodepVersion": "v62",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
 	"Deps": []
 }
